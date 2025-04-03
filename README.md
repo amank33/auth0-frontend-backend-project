@@ -6,6 +6,11 @@ https://frontend-react-auth0-aabciwc3g-amans-projects-a77f4120.vercel.app/
 API documentation-Please find the documentation link- https://web.postman.co/documentation/28442885-2efbd592-7640-4fcc-8def-fafde54c9550/publish?workspaceId=5c94b499-088f-4cd4-8a1f-3535ffc5c7ca
 also present in the server folder exported as postman_collection.json
 
+backend deployed on railway, use the below link to connect andd make api calls-
+https://auth0-frontend-backend-project-production.up.railway.app/api/auth/callback
+REQUEST_TYPE-"POST"
+
+
 ### GETTING ERRORS IN NEXTJS which i wasn't able to resolve
 Made this project in Next js as well but getting error for @auth0/nextjs-auth0/client. Client is not coming as a dependency, if it resolves, then getting an error in {useUser} import so, i tried making the project with APP router and as well as without app router. With app router JWT token is not getting authorized, getting unathorized error. I have made the code for NEXTJS in the folder frontend-nextjs-aman. Hence, i went on with building it in react using vite.
 
@@ -93,17 +98,59 @@ AUTH0_DOMAIN=your-auth0-domain
 AUTH0_CLIENT_ID=your-auth0-client-id
 AUTH0_CLIENT_SECRET=your-auth0-client-secret
 AUTH0_AUDIENCE=https://your-auth0-domain/api/v2/
-EMAIL_FROM=your-email@example.com
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=your-email@example.com
-SMTP_PASS=your-email-password
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USER = 'your-email@example.com' //you can use yopmail.io for dummy mail ids to test
+EMAIL_PASS = 'cxhw fwmy ffpp igna' //generate using 2 factor authentication from your gmail accout, click app actions, create next "react" and paste the code here
+EMAIL_FROM = 'your-email@example.com'
 
 Frontend (frontend-react/.env):
 
 VITE_AUTH0_DOMAIN=your-auth0-domain
 VITE_AUTH0_CLIENT_ID=your-auth0-client-id
 VITE_AUTH0_AUDIENCE=https://your-auth0-domain/api/v2/
+
+▶️ Create custom library and add those using custom trigger
+
+1.Dashboard->actions->library->custom action
+on post-login
+
+paste this code and change the secret key according to the environment variables we changed earlier, defaultRoleId refers to the id of the role you want to add by default.
+exports.onExecutePostLogin = async (event, api) => {
+
+  if(event.authorization?.roles.length==0){
+    const ManagementClient=require('auth0').ManagementClient;
+
+    const management= new ManagementClient({
+      domain:event.secrets.domain,
+      clientId:event.secrets.clientId,
+      clientSecret:event.secrets.clientSecret
+    })
+
+    const params={id:event.user.user_id};
+    const data={'roles':[event.secrets.defaultRoleId]};
+
+    try{
+      await management.users.assignRoles(params,data)
+    }catch(e){
+      console.log(e)
+    }
+  }
+};
+
+
+2. create 2nd actions the same way
+on pre-login as well
+exports.onExecutePostLogin = async (event, api) => {
+  const namespace = 'https://my-app.example.com';
+  if (event.authorization) {
+    api.idToken.setCustomClaim(`${namespace}/roles`, event.authorization.roles);
+    api.accessToken.setCustomClaim(`${namespace}/roles`, event.authorization.roles);
+  }
+}
+
+3. now add these by going to triggers->post login->custom->drag and drop
 
 ▶️ Running the Project
 
@@ -118,6 +165,8 @@ cd frontend-react
 npm run dev
 
 Now, open http://localhost:5173 in your browser.
+
+
 
 📌 Features
 
