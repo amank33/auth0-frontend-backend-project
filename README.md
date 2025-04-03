@@ -1,44 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+Frontend(React)- deployed on the below URL-
+https://frontend-react-auth0-aabciwc3g-amans-projects-a77f4120.vercel.app/
+1.login page, email to user on signup and login with access token
+2.logout page with access token and logged in user roles displayed
 
-## Getting Started
+API documentation-Please find the documentation link- https://web.postman.co/documentation/28442885-2efbd592-7640-4fcc-8def-fafde54c9550/publish?workspaceId=5c94b499-088f-4cd4-8a1f-3535ffc5c7ca
+also present in the server folder exported as postman_collection.json
 
-First, run the development server:
+### GETTING ERRORS IN NEXTJS which i wasn't able to resolve
+Made this project in Next js as well but getting error for @auth0/nextjs-auth0/client. Client is not coming as a dependency, if it resolves, then getting an error in {useUser} import so, i tried making the project with APP router and as well as without app router. With app router JWT token is not getting authorized, getting unathorized error. I have made the code for NEXTJS in the folder frontend-nextjs-aman. Hence, i went on with building it in react using vite.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+##USING REACT
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1.used vite to create react app, typescript, react-router-dom, bootstrap
+2.used Auth0Provider in main.jsx.
+3.app.jsx contain navbar component rendered
+4.auth folder contains the code for without role based access and with role based access implemented.
+5.Implemented login and logout functionality in navbar.jsx inside components folder contains the whole code being used.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+####to use react with auth0####
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1.create a single page application with auth0
+2.go to application settings->Application URIs->add 
+Allowed Callback URLs: http://localhost:5173
+Allowed Logout URLs: http://localhost:5173
+Allowed Web Origins: http://localhost:5173
+3.set up env values 
+VITE_AUTH0_DOMAIN=dev-y5bhe53edpgjraqa.us.auth0.com
+VITE_AUTH0_CLIENT_ID=YCXezqMPn9ODLjYSAkuMg59uMHspNsYl
+4.enable Cross-Origin Authentication from apllication settings in auth0
+5.Create roles inside User management->roles of your project
+6.create users with roles
+7.add action->library 2 action on post-login request 
+  i)add default role to user for anybody who sign's up 
+  ii)add role to user based on email, passing it as a parameter in the action
+8.create a new action->library 2 action on post-login request
+9.add these custom triggers created by us.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
-
+//to no go into details and create directly
 React + Node.js Auth0 Authentication Project
 
 This project is a React frontend with Auth0 authentication and a Node.js backend. It uses Bootstrap for styling and supports role-based authentication.
@@ -111,7 +110,7 @@ VITE_AUTH0_AUDIENCE=https://your-auth0-domain/api/v2/
 Start Backend
 
 cd server
-npm run dev
+npm start
 
 Start Frontend
 
@@ -124,7 +123,7 @@ Now, open http://localhost:5173 in your browser.
 
 ✅ Login & Logout with Auth0
 ✅ Fetch & Display User Roles
-✅ Secure API with JWT Authentication
+✅ Secure API with JWT Authentication only accessible by admins
 ✅ Role-Based Access Control
-✅ Email Notifications (SMTP / Nodemailer)
+✅ Email Notifications (SMTP / Nodemailer) with token
 ✅ Bootstrap UI
