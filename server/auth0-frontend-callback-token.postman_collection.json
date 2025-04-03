@@ -1,0 +1,79 @@
+{
+	"info": {
+		"_postman_id": "2efbd592-7640-4fcc-8def-fafde54c9550",
+		"name": "auth0-frontend-callback-token",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28442885"
+	},
+	"item": [
+		{
+			"name": "http://localhost:4007/api/auth/callback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Message</th>\r",
+							"        <th>Roles</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.message}}</td>\r",
+							"        <td>{{#each response.roles}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjdodW5jZjJGRzdjdjZMNzhfTEgydSJ9.eyJodHRwczovL215LWFwcC5leGFtcGxlLmNvbS9yb2xlcyI6WyJBZG1pbiIsIlVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9kZXYteTViaGU1M2VkcGdqcmFxYS51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTMzMDA4MjExNTgwMTIzNzc5NzAiLCJhdWQiOlsiaHR0cHM6Ly9kZXYteTViaGU1M2VkcGdqcmFxYS51cy5hdXRoMC5jb20vYXBpL3YyLyIsImh0dHBzOi8vZGV2LXk1YmhlNTNlZHBnanJhcWEudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTc0MzY1Nzk2NCwiZXhwIjoxNzQzNzQ0MzY0LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXpwIjoiWUNYZXpxTVBuOU9ETGpZU0FrdU1nNTl1TUhzcE5zWWwifQ.QXzZskGJ9nh_edisBdWohsmYPUX291j9t-36c7B3Avf0ClT7IE02LH5a7HkiYww8XO08WhDAHki_r7duAyWLrDt7vFkQQUZH9yS6NbhVAzcZOGjP1_O9jn6gy5RStWLlaAQPXn5xIBOGc95M1wuqcTjixSKbO-oC_mSxigokVMTfytKfIXGFL9W88BgBdiWjB29vJbr4RB6qOIQuCHzRBP_mOHdhYq9CtaWNLaEBhSdWwAb3_UisAH8HQBKzbT6bCjm3ThuK-6lWSomrmKlVtfvbxGIkyM8QizbZCM0HvRvPVxbD7vCiERyerGDhzKBr1zJgoryo8PNtdKZRP7zcGA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4007/api/auth/callback",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4007",
+					"path": [
+						"api",
+						"auth",
+						"callback"
+					]
+				},
+				"description": "The `POST /api/auth/callback` endpoint is used to handle the callback after authentication. Upon successful execution, the endpoint returns a JSON response with a status code of 200 and the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"roles\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"string\"\n            }\n        }\n    }\n}\n\n ```\n\nhere is how it looks- [https://web.postman.co/workspace/My-Workspace~5c94b499-088f-4cd4-8a1f-3535ffc5c7ca/request/28442885-106d3ebf-b563-403c-81a9-0c33d412e018?historyId=28442885-1e219f8f-91d1-49a5-a44f-16c2c1cca922&amp;utm_source=postman&amp;utm_medium=response_tab&amp;utm_campaign=core&amp;utm_content=link](https://web.postman.co/workspace/My-Workspace~5c94b499-088f-4cd4-8a1f-3535ffc5c7ca/request/28442885-106d3ebf-b563-403c-81a9-0c33d412e018?historyId=28442885-1e219f8f-91d1-49a5-a44f-16c2c1cca922&utm_source=postman&utm_medium=response_tab&utm_campaign=core&utm_content=link)\n\n| Message | Roles |\n| --- | --- |\n| Email sent successfully! | Admin, User |\n\nSend the request using the format listed below-\n\nheaders-\n\nAuthorization- Bearer"
+			},
+			"response": []
+		}
+	]
+}
